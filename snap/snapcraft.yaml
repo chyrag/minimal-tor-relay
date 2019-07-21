@@ -1,0 +1,30 @@
+name: minimal-tor-relay
+base: core18
+version: '0.1'
+summary: Minimal TOR relay
+description: |
+  Minimal TOR relay based on snap.
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+architectures:
+  - build-on: amd64
+    run-on: armhf
+
+parts:
+  tor:
+    plugin: autotools
+    source-type: git
+    source: https://git.torproject.org/git/tor
+    configflags:
+      - --disable-asciidoc
+    build-packages:
+      - libevent-dev
+      - libssl-dev
+      - zlib1g
+      - zlib1g-dev
+
+apps:
+  tor:
+    command: tor
